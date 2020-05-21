@@ -19,3 +19,10 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
