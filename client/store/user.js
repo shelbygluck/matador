@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import axios from 'axios'
 import history from '../history'
 
@@ -38,7 +39,6 @@ export const auth = (email, password, method) => async dispatch => {
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
-
   try {
     dispatch(getUser(res.data))
     history.push('/home')
@@ -48,17 +48,43 @@ export const auth = (email, password, method) => async dispatch => {
 }
 
 export const purchase = (ticker, quantity, email) => async dispatch => {
-  let res
+  let iexRes, currentPrice, totalPrice, user, balance
   try {
-    res = await axios.get(
+    iexRes = await axios.get(
       `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0`
     )
-    let currentPrice = res.data.latestPrice
-    console.log(currentPrice)
+    currentPrice = iexRes.data.latestPrice
+    totalPrice = currentPrice * quantity
   } catch (err) {
     console.log(err)
   }
+
+  try {
+    user = await axios.get(`/api/users/${email}`)
+    balance = user.data[0].balance
+    console.log(balance)
+  } catch (err) {
+    console.log(err)
+  }
+
+  if (balance < totalPrice) {
+    window.alert('balance insufficient')
+  } else {
+    try {
+      let newBalance = balance - totalPrice
+      user = await axios.post(`/api/users/${email}`, newBalance)
+      console.log(user.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }
+
+//if enough, add new transaction, delete total amount from balance
+//if not enough, send back "Balance insufficient"
+
+//create empty transactions table tied to user (ticker, quantity, purchasePrice)
+//portfolio page will simply flatten transactions to combine repeats
 
 export const logout = () => async dispatch => {
   try {

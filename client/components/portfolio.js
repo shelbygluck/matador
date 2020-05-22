@@ -57,7 +57,7 @@ const mapDispatch = dispatch => {
       evt.preventDefault()
       const email = evt.target.email.value
       const ticker = evt.target.ticker.value
-      const quantity = evt.target.quantity.value
+      const quantity = Number(evt.target.quantity.value)
       console.log(ticker, quantity, email)
       dispatch(purchase(ticker, quantity, email))
     }

@@ -15,3 +15,36 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:email', async (req, res, next) => {
+  try {
+    let user = await User.findAll({
+      where: {
+        email: req.params.email
+      }
+    })
+    res.send(user)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/:email', async (req, res, next) => {
+  let balance = Number(req.body)
+  console.log(balance)
+  res.send('went through post')
+  // try {
+  //   let [numberOfAffectedRows, affectedRows] = await User.update({
+  //     balance: balance
+  //   }, {
+  //     where: {email: req.params.email},
+  //     returning: true,
+  //     plain: true
+  //   })
+
+  //   console.log(numberOfAffectedRows)
+  //   console.log(affectedRows)
+  // } catch(err) {
+  //   next(err)
+  // }
+})
