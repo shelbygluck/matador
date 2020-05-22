@@ -1,13 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import Axios from 'axios'
+import {purchase} from '../store'
 /**
  * COMPONENT
  */
-
-// const iexKey = 'pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0'
-// const currentPrice =  await Axios.get(`https://cloud.iexapis.com/stable/stock/XOM/quote?token=${iexKey}`)
 
 export const Portfolio = props => {
   const {email, balance, handleSubmit} = props
@@ -62,10 +59,11 @@ const mapDispatch = dispatch => {
       const ticker = evt.target.ticker.value
       const quantity = evt.target.quantity.value
       console.log(ticker, quantity, email)
-      // dispatch(auth(ticker, quantity, this.props.email))
+      dispatch(purchase(ticker, quantity, email))
     }
   }
 }
+
 export default connect(mapState, mapDispatch)(Portfolio)
 
 /**

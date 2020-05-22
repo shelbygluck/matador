@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import Axios from 'axios'
 
 // `https://cloud.iexapis.com/stable/      endpoint       ?token=${iexKey}       &query=string`
 

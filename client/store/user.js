@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const PURCHASE = 'PURCHASE'
 
 /**
  * INITIAL STATE
@@ -43,6 +44,19 @@ export const auth = (email, password, method) => async dispatch => {
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
+  }
+}
+
+export const purchase = (ticker, quantity, email) => async dispatch => {
+  let res
+  try {
+    res = await axios.get(
+      `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0`
+    )
+    let currentPrice = res.data.latestPrice
+    console.log(currentPrice)
+  } catch (err) {
+    console.log(err)
   }
 }
 
