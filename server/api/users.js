@@ -30,9 +30,10 @@ router.get('/:email', async (req, res, next) => {
 })
 
 router.post('/:email', async (req, res, next) => {
+  let numberOfAffectedRows, affectedRows
   let newBalance = Number(req.body.newBalance)
   try {
-    let [numberOfAffectedRows, affectedRows] = await User.update(
+    ;[numberOfAffectedRows, affectedRows] = await User.update(
       {
         balance: newBalance
       },
@@ -42,11 +43,8 @@ router.post('/:email', async (req, res, next) => {
         plain: true
       }
     )
-
-    console.log(numberOfAffectedRows)
-    console.log(affectedRows)
+    res.send(affectedRows.dataValues.balance)
   } catch (err) {
     next(err)
   }
-  res.send('went through post route!!!')
 })

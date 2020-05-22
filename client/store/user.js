@@ -7,7 +7,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-const PURCHASE = 'PURCHASE'
+const UPDATE_BALANCE = 'UPDATE_BALANCE'
 
 /**
  * INITIAL STATE
@@ -19,6 +19,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const updateBalance = newBalance => ({type: UPDATE_BALANCE, newBalance})
 
 /**
  * THUNK CREATORS
@@ -73,7 +74,7 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
     try {
       let newBalance = balance - totalPrice
       user = await axios.post(`/api/users/${email}`, {newBalance: newBalance})
-      console.log(user.data)
+      dispatch(updateBalance(user.data))
     } catch (err) {
       console.log(err)
     }
@@ -105,6 +106,8 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case UPDATE_BALANCE:
+      return Object.assign({}, state, {balance: action.newBalance})
     default:
       return state
   }

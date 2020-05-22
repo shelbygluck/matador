@@ -11,6 +11,7 @@ export const Portfolio = props => {
 
   return (
     <div>
+      {console.log(balance)}
       <h3>
         Portfolio for {email}, balance is {balance}
       </h3>
