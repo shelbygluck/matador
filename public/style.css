@@ -70,3 +70,11 @@ form div {
 .whiteSpace {
   color: white;
 }
+
+#invisible {
+  background-color: white;
+  color: white;
+  border: 0px;
+  height: 0px;
+  width: 0px;
+}

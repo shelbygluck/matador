@@ -32,6 +32,11 @@ export const Portfolio = props => {
           <input name="quantity" type="number" />
         </div>
         <div>
+          <label htmlFor="email">
+            <input id="invisible" name="email" type="string" value={email} />
+          </label>
+        </div>
+        <div>
           <button type="submit">Purchase</button>
         </div>
       </form>
@@ -53,9 +58,10 @@ const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
+      const email = evt.target.email.value
       const ticker = evt.target.ticker.value
       const quantity = evt.target.quantity.value
-      console.log(ticker, quantity, this.state.email)
+      console.log(ticker, quantity, email)
       // dispatch(auth(ticker, quantity, this.props.email))
     }
   }
