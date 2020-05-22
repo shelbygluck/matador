@@ -1,18 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-
+import Axios from 'axios'
 /**
  * COMPONENT
  */
+
+// const iexKey = 'pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0'
+// const currentPrice =  await Axios.get(`https://cloud.iexapis.com/stable/stock/XOM/quote?token=${iexKey}`)
+
 export const Portfolio = props => {
-  const {email, balance} = props
+  const {email, balance, handleSubmit} = props
 
   return (
     <div>
       <h3>
         Portfolio for {email}, balance is {balance}
       </h3>
+
+      <form id="stock-form" onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="ticker">
+            <small>Ticker</small>
+          </label>
+          <input name="ticker" type="text" />
+        </div>
+        <div>
+          <label htmlFor="quantity">
+            <small>Quantity</small>
+          </label>
+          <input name="quantity" type="number" />
+        </div>
+        <div>
+          <button type="submit">Purchase</button>
+        </div>
+      </form>
     </div>
   )
 }
@@ -27,7 +49,18 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(Portfolio)
+const mapDispatch = dispatch => {
+  return {
+    handleSubmit(evt) {
+      evt.preventDefault()
+      const ticker = evt.target.ticker.value
+      const quantity = evt.target.quantity.value
+      console.log(ticker, quantity, this.state.email)
+      // dispatch(auth(ticker, quantity, this.props.email))
+    }
+  }
+}
+export default connect(mapState, mapDispatch)(Portfolio)
 
 /**
  * PROP TYPES

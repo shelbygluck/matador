@@ -44,6 +44,13 @@ form div {
   align-items: center;
 }
 
+#stock-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #top-logo {
   height: 50px;
   width: 50px;

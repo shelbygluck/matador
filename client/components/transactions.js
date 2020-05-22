@@ -1,6 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Axios from 'axios'
+
+// `https://cloud.iexapis.com/stable/      endpoint       ?token=${iexKey}       &query=string`
+
+// https://cloud.iexapis.com/stable/stock/XOM/quote?token=YOUR_TOKEN_HERE
+// this gets current stock price of exxon (XOM)
 
 /**
  * COMPONENT
