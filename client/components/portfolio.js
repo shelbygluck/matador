@@ -6,11 +6,13 @@ import {connect} from 'react-redux'
  * COMPONENT
  */
 export const Portfolio = props => {
-  const {email} = props
+  const {email, balance} = props
 
   return (
     <div>
-      <h3>Portfolio for {email}</h3>
+      <h3>
+        Portfolio for {email}, balance is {balance}
+      </h3>
     </div>
   )
 }
@@ -20,7 +22,8 @@ export const Portfolio = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    balance: state.user.balance
   }
 }
 
