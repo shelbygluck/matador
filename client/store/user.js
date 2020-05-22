@@ -72,7 +72,7 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
   } else {
     try {
       let newBalance = balance - totalPrice
-      user = await axios.post(`/api/users/${email}`, newBalance)
+      user = await axios.post(`/api/users/${email}`, {newBalance: newBalance})
       console.log(user.data)
     } catch (err) {
       console.log(err)
