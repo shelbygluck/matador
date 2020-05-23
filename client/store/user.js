@@ -109,3 +109,9 @@ export default function(state = defaultUser, action) {
       return state
   }
 }
+
+//you have created transactions table with fk association correctly
+//need to add code to create new transactions instance in your giant post route
+//and fetch userId and make sure it's linked
+//plus Link to refresh page after everything is done
+//maybe some alert to say your transaction was successful
