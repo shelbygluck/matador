@@ -54,10 +54,13 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
     iexRes = await axios.get(
       `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0`
     )
+    console.log('IEX RESPONSE to initial call', iexRes.data)
     currentPrice = iexRes.data.latestPrice
     totalPrice = currentPrice * quantity
   } catch (err) {
     console.log(err)
+    window.alert('Invalid ticker symbol')
+    return
   }
 
   try {
@@ -69,7 +72,7 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
   }
 
   if (balance < totalPrice) {
-    window.alert('balance insufficient')
+    window.alert('Balance insufficient')
   } else {
     try {
       let newBalance = balance - totalPrice
@@ -80,12 +83,6 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
     }
   }
 }
-
-//if enough, add new transaction, delete total amount from balance
-//if not enough, send back "Balance insufficient"
-
-//create empty transactions table tied to user (ticker, quantity, purchasePrice)
-//portfolio page will simply flatten transactions to combine repeats
 
 export const logout = () => async dispatch => {
   try {
