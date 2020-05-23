@@ -1,6 +1,26 @@
 const router = require('express').Router()
-const {Transaction} = require('../db/models')
+const {User, Transaction} = require('../db/models')
 module.exports = router
+
+router.get('/:email', async (req, res, next) => {
+  try {
+    let user = await User.findAll({
+      where: {
+        email: req.params.email
+      }
+    })
+    let userId = user[0].dataValues.id
+    let transactions = await Transaction.findAll({
+      where: {
+        userId: userId
+      }
+    })
+    console.log(transactions)
+    res.send(transactions)
+  } catch (err) {
+    console.log(err)
+  }
+})
 
 router.post('/', async (req, res, next) => {
   console.log(req.body)

@@ -1,24 +1,40 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-
-// `https://cloud.iexapis.com/stable/      endpoint       ?token=${iexKey}       &query=string`
-
-// https://cloud.iexapis.com/stable/stock/XOM/quote?token=YOUR_TOKEN_HERE
-// this gets current stock price of exxon (XOM)
-
+import {gettingTransactions} from '../store/transaction'
 /**
  * COMPONENT
  */
-export const Transactions = props => {
-  const {email} = props
+export class Transactions extends Component {
+  constructor() {
+    super()
+    this.state = {
+      transactionsLoaded: false
+    }
+  }
 
-  return (
-    <div>
-      {console.log(props)}
-      <h3>Transactions for {email}</h3>
-    </div>
-  )
+  async componentDidMount() {
+    await this.props.getTransactions(this.props.email)
+    this.setState({
+      transactionsLoaded: true
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        {console.log(this.state.transactionsLoaded)}
+        <h3>Transactions for {this.props.email}</h3>
+        {this.state.transactionsLoaded ? (
+          this.props.transactions.map(transaction => {
+            return <h3 key="transaction.id">{transaction.ticker}</h3>
+          })
+        ) : (
+          <div>loading transactions</div>
+        )}
+      </div>
+    )
+  }
 }
 
 /**
@@ -26,11 +42,17 @@ export const Transactions = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    balance: state.user.balance,
+    transactions: state.transaction
   }
 }
 
-export default connect(mapState)(Transactions)
+const mapDispatch = dispatch => ({
+  getTransactions: email => dispatch(gettingTransactions(email))
+})
+
+export default connect(mapState, mapDispatch)(Transactions)
 
 /**
  * PROP TYPES

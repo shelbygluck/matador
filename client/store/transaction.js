@@ -5,7 +5,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const ADD_TRANSACTION = 'ADD_TRANSACTION'
-
+const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
 /**
  * INITIAL STATE
  */
@@ -17,6 +17,11 @@ const initialState = []
 const addedTransaction = transactionInfo => ({
   type: ADD_TRANSACTION,
   transactionInfo
+})
+
+const getMyTransactions = transactions => ({
+  type: GET_TRANSACTIONS,
+  transactions
 })
 /**
  * THUNK CREATORS
@@ -31,6 +36,16 @@ export const addTransaction = transactionInfo => async dispatch => {
     console.log(err)
   }
 }
+
+export const gettingTransactions = email => async dispatch => {
+  try {
+    let res = await axios.get(`/api/transaction/${email}`)
+    dispatch(getMyTransactions(res.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -38,6 +53,8 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_TRANSACTION:
       return [...state, action.transactionInfo]
+    case GET_TRANSACTIONS:
+      return action.transactions
     default:
       return state
   }
