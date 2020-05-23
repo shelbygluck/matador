@@ -23,8 +23,8 @@ export class Transactions extends Component {
   render() {
     return (
       <div>
-        {console.log(this.state.transactionsLoaded)}
         <h3>Transactions for {this.props.email}</h3>
+
         <div id="transactionTable">
           {this.state.transactionsLoaded ? (
             this.props.transactions.map(transaction => {
@@ -34,8 +34,9 @@ export class Transactions extends Component {
                     <h3>{transaction.ticker}</h3>
                     <h3 className="separator">|</h3>
                     <h3>
-                      {transaction.quantity} shares @{' '}
-                      {transaction.purchasePrice}
+                      {transaction.quantity} shares @ ${
+                        transaction.purchasePrice
+                      }
                     </h3>
                   </div>
                   <h3 className="separator">

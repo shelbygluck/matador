@@ -47,7 +47,7 @@ form div {
 #stock-form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 }
 
@@ -83,9 +83,11 @@ form div {
   display: flex;
   flex-direction: column;
   justify-items: center;
+  align-items: left;
   background-color: lightblue;
-  margin-left: 10em;
-  margin-right: 10em;
+  width: 500px;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
 .transactionSegment {
@@ -105,4 +107,9 @@ form div {
   font-weight: lighter;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.portfolioContainer {
+  display: flex;
+  justify-content: left;
 }
