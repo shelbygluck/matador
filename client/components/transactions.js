@@ -25,13 +25,29 @@ export class Transactions extends Component {
       <div>
         {console.log(this.state.transactionsLoaded)}
         <h3>Transactions for {this.props.email}</h3>
-        {this.state.transactionsLoaded ? (
-          this.props.transactions.map(transaction => {
-            return <h3 key="transaction.id">{transaction.ticker}</h3>
-          })
-        ) : (
-          <div>loading transactions</div>
-        )}
+        <div id="transactionTable">
+          {this.state.transactionsLoaded ? (
+            this.props.transactions.map(transaction => {
+              return (
+                <div key="transaction.id" className="transactionSegment">
+                  <div className="transactionRow">
+                    <h3>{transaction.ticker}</h3>
+                    <h3 className="separator">|</h3>
+                    <h3>
+                      {transaction.quantity} shares @{' '}
+                      {transaction.purchasePrice}
+                    </h3>
+                  </div>
+                  <h3 className="separator">
+                    __________________________________
+                  </h3>
+                </div>
+              )
+            })
+          ) : (
+            <div>loading transactions</div>
+          )}
+        </div>
       </div>
     )
   }

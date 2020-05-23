@@ -15,7 +15,6 @@ router.get('/:email', async (req, res, next) => {
         userId: userId
       }
     })
-    console.log(transactions)
     res.send(transactions)
   } catch (err) {
     console.log(err)

@@ -78,3 +78,31 @@ form div {
   height: 0px;
   width: 0px;
 }
+
+#transactionTable {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  background-color: lightblue;
+  margin-left: 10em;
+  margin-right: 10em;
+}
+
+.transactionSegment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.transactionRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.separator {
+  font-weight: lighter;
+  margin-left: 10px;
+  margin-right: 10px;
+}
