@@ -1,6 +1,7 @@
 /* eslint-disable no-alert */
 import axios from 'axios'
 import history from '../history'
+import {addTransaction} from './transaction'
 
 /**
  * ACTION TYPES
@@ -49,7 +50,7 @@ export const auth = (email, password, method) => async dispatch => {
 }
 
 export const purchase = (ticker, quantity, email) => async dispatch => {
-  let iexRes, currentPrice, totalPrice, user, balance
+  let iexRes, currentPrice, totalPrice, user, balance, userId
   try {
     iexRes = await axios.get(
       `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0`
@@ -65,23 +66,32 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
 
   try {
     user = await axios.get(`/api/users/${email}`)
+    userId = user.data[0].id
     balance = user.data[0].balance
-    console.log(balance)
+    console.log('IS USER ID HERE?', userId)
   } catch (err) {
     console.log(err)
   }
 
   if (balance < totalPrice) {
     window.alert('Balance insufficient')
-  } else {
-    try {
-      let newBalance = balance - totalPrice
-      user = await axios.post(`/api/users/${email}`, {newBalance: newBalance})
-      dispatch(updateBalance(user.data))
-    } catch (err) {
-      console.log(err)
-    }
+    return
   }
+  try {
+    let newBalance = balance - totalPrice
+    user = await axios.post(`/api/users/${email}`, {newBalance: newBalance})
+    dispatch(updateBalance(user.data))
+  } catch (err) {
+    console.log(err)
+  }
+
+  let transactionInfo = {
+    ticker: ticker,
+    quantity: quantity,
+    purchasePrice: currentPrice,
+    userId: userId
+  }
+  dispatch(addTransaction(transactionInfo))
 }
 
 export const logout = () => async dispatch => {
@@ -112,6 +122,6 @@ export default function(state = defaultUser, action) {
 
 //you have created transactions table with fk association correctly
 //need to add code to create new transactions instance in your giant post route
-//and fetch userId and make sure it's linked
+// make sure fk/pk it's linked
 //plus Link to refresh page after everything is done
 //maybe some alert to say your transaction was successful
