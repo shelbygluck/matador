@@ -14,6 +14,7 @@ export class Portfolio extends Component {
     this.state = {
       portfolioLoaded: false
     }
+    this.combineRepeatTransacations.bind(this)
   }
 
   async componentDidMount() {
@@ -21,6 +22,23 @@ export class Portfolio extends Component {
     this.setState({
       portfolioLoaded: true
     })
+  }
+
+  combineRepeatTransacations(transactions) {
+    console.log('ryguy', transactions)
+    let noRepeatTickers = {}
+    for (let i = 0; i < transactions.length; i++) {
+      let transaction = transactions[i]
+      if (noRepeatTickers[transaction.ticker]) {
+        console.log('nonunique tran')
+        noRepeatTickers[transaction.ticker] += transaction.quantity
+      } else {
+        console.log('unique trans')
+        noRepeatTickers[transaction.ticker] = transaction.quantity
+      }
+    }
+    console.log(Object.entries(noRepeatTickers))
+    return Object.entries(noRepeatTickers)
   }
 
   render() {
@@ -33,24 +51,22 @@ export class Portfolio extends Component {
         <div className="portfolioContainer">
           <div id="transactionTable">
             {this.state.portfolioLoaded ? (
-              this.props.transactions.map(transaction => {
-                return (
-                  <div key="transaction.id" className="transactionSegment">
-                    <div className="transactionRow">
-                      <h3>{transaction.ticker}</h3>
-                      <h3 className="separator">|</h3>
-                      <h3>
-                        {transaction.quantity} shares @ ${
-                          transaction.purchasePrice
-                        }
+              this.combineRepeatTransacations(this.props.transactions).map(
+                transaction => {
+                  return (
+                    <div key="transaction.id" className="transactionSegment">
+                      <div className="transactionRow">
+                        <h3>{transaction[0]}</h3>
+                        <h3 className="separator">|</h3>
+                        <h3>{transaction[1]} shares @ $api call here</h3>
+                      </div>
+                      <h3 className="separator">
+                        __________________________________
                       </h3>
                     </div>
-                    <h3 className="separator">
-                      __________________________________
-                    </h3>
-                  </div>
-                )
-              })
+                  )
+                }
+              )
             ) : (
               <div>loading portfolio</div>
             )}
@@ -121,3 +137,6 @@ export default connect(mapState, mapDispatch)(Portfolio)
 Portfolio.propTypes = {
   email: PropTypes.string
 }
+
+//showing non flattened transactions, good job!
+//now you need to flatten share count, and get api call to current price * quantity owned
