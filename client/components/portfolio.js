@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {purchase} from '../store'
 import {gettingTransactions} from '../store/transaction'
+import axios from 'axios'
 
 /**
  * COMPONENT
@@ -12,33 +13,59 @@ export class Portfolio extends Component {
   constructor() {
     super()
     this.state = {
-      portfolioLoaded: false
+      portfolioLoaded: false,
+      portfolio: []
     }
-    this.combineRepeatTransacations.bind(this)
+    this.fillLatestStockValue = this.fillLatestStockValue.bind(this)
   }
 
   async componentDidMount() {
     await this.props.getTransactions(this.props.email)
-    this.setState({
-      portfolioLoaded: true
-    })
-  }
 
-  combineRepeatTransacations(transactions) {
-    console.log('ryguy', transactions)
+    let transactions = this.props.transactions
     let noRepeatTickers = {}
     for (let i = 0; i < transactions.length; i++) {
       let transaction = transactions[i]
       if (noRepeatTickers[transaction.ticker]) {
-        console.log('nonunique tran')
-        noRepeatTickers[transaction.ticker] += transaction.quantity
+        let newQuantity =
+          noRepeatTickers[transaction.ticker][0] + transaction.quantity
+        let latestValue = await this.fillLatestStockValue(transaction.ticker)
+        noRepeatTickers[transaction.ticker] = [newQuantity, latestValue]
       } else {
-        console.log('unique trans')
-        noRepeatTickers[transaction.ticker] = transaction.quantity
+        let latestValue = await this.fillLatestStockValue(transaction.ticker)
+        noRepeatTickers[transaction.ticker] = [
+          transaction.quantity,
+          latestValue
+        ]
       }
     }
-    console.log(Object.entries(noRepeatTickers))
-    return Object.entries(noRepeatTickers)
+
+    let arrayForm = Object.entries(noRepeatTickers)
+
+    // let arrayFilledValue = arrayForm.map(async stock => {
+    //   let ticker = stock[0]
+    //   let quantity = stock[1][0]
+    //   let latestValue = await this.fillLatestStockValue(ticker)
+    //   console.log(latestValue, 'after func call')
+    //   let totalValue = quantity * latestValue
+    //    return [ticker, [quantity, totalValue]]
+    // })
+    this.setState({
+      portfolioLoaded: true,
+      portfolio: arrayForm
+    })
+  }
+
+  async fillLatestStockValue(ticker) {
+    let iexRes
+    try {
+      iexRes = await axios.get(
+        `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0`
+      )
+      return iexRes.data.latestPrice
+    } catch (err) {
+      console.log('NOT FINDING LATEST PRICE')
+    }
   }
 
   render() {
@@ -51,22 +78,25 @@ export class Portfolio extends Component {
         <div className="portfolioContainer">
           <div id="transactionTable">
             {this.state.portfolioLoaded ? (
-              this.combineRepeatTransacations(this.props.transactions).map(
-                transaction => {
-                  return (
-                    <div key="transaction.id" className="transactionSegment">
-                      <div className="transactionRow">
-                        <h3>{transaction[0]}</h3>
-                        <h3 className="separator">|</h3>
-                        <h3>{transaction[1]} shares @ $api call here</h3>
-                      </div>
-                      <h3 className="separator">
-                        __________________________________
+              this.state.portfolio.map(transaction => {
+                let ticker = transaction[0]
+                let quantity = transaction[1][0]
+                let value = transaction[1][1]
+                return (
+                  <div key="transaction.id" className="transactionSegment">
+                    <div className="transactionRow">
+                      <h3>{ticker}</h3>
+                      <h3 className="separator">|</h3>
+                      <h3>
+                        {quantity} shares, total value of ${quantity * value}
                       </h3>
                     </div>
-                  )
-                }
-              )
+                    <h3 className="separator">
+                      __________________________________
+                    </h3>
+                  </div>
+                )
+              })
             ) : (
               <div>loading portfolio</div>
             )}
