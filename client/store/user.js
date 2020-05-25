@@ -59,7 +59,7 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
     totalPrice = currentPrice * quantity
   } catch (err) {
     console.log(err)
-    window.alert('Invalid ticker symbol')
+    window.alert(`${ticker} is not a valid ticker symbol`)
     return
   }
 
@@ -72,7 +72,9 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
   }
 
   if (balance < totalPrice) {
-    window.alert('Balance insufficient')
+    window.alert(
+      `$${balance} balance is insufficient for a $${totalPrice} purchase`
+    )
     return
   }
   try {
