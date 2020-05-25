@@ -1,10 +1,8 @@
 /* eslint-disable react/no-access-state-in-setstate */
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {purchase} from '../store'
-import {gettingTransactions} from '../store/transaction'
 import axios from 'axios'
+import {gettingTransactions} from '../store/transaction'
 
 /**
  * COMPONENT
@@ -62,9 +60,7 @@ export class Portfolio extends Component {
   render() {
     return (
       <div>
-        <h3>
-          Portfolio for {this.props.email}, balance is {this.props.balance}
-        </h3>
+        <h3>Portfolio for {this.props.email}</h3>
         <div className="portfolioContainer">
           <div id="transactionTable">
             {this.state.portfolioLoaded ? (
@@ -91,34 +87,6 @@ export class Portfolio extends Component {
               <div>loading portfolio</div>
             )}
           </div>
-
-          <form id="stock-form" onSubmit={this.props.handleSubmit}>
-            <div>
-              <label htmlFor="ticker">
-                <small>Ticker</small>
-              </label>
-              <input name="ticker" type="text" />
-            </div>
-            <div>
-              <label htmlFor="quantity">
-                <small>Quantity</small>
-              </label>
-              <input name="quantity" type="number" />
-            </div>
-            <div>
-              <label htmlFor="email">
-                <input
-                  id="invisible"
-                  name="email"
-                  type="string"
-                  value={this.props.email}
-                />
-              </label>
-            </div>
-            <div>
-              <button type="submit">Purchase</button>
-            </div>
-          </form>
         </div>
       </div>
     )
@@ -131,28 +99,12 @@ export class Portfolio extends Component {
 const mapState = state => {
   return {
     email: state.user.email,
-    balance: state.user.balance,
     transactions: state.transaction
   }
 }
 
 const mapDispatch = dispatch => ({
-  getTransactions: email => dispatch(gettingTransactions(email)),
-
-  handleSubmit(evt) {
-    evt.preventDefault()
-    const email = evt.target.email.value
-    const ticker = evt.target.ticker.value
-    const quantity = Number(evt.target.quantity.value)
-    dispatch(purchase(ticker, quantity, email))
-  }
+  getTransactions: email => dispatch(gettingTransactions(email))
 })
 
 export default connect(mapState, mapDispatch)(Portfolio)
-
-/**
- * PROP TYPES
- */
-Portfolio.propTypes = {
-  email: PropTypes.string
-}

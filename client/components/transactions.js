@@ -31,7 +31,7 @@ export class Transactions extends Component {
               return (
                 <div key="transaction.id" className="transactionSegment">
                   <div className="transactionRow">
-                    <h3>{transaction.ticker}</h3>
+                    <h3>PURCHASED {transaction.ticker}</h3>
                     <h3 className="separator">|</h3>
                     <h3>
                       {transaction.quantity} shares @ ${
