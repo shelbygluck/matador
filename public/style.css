@@ -113,3 +113,13 @@ form div {
   display: flex;
   justify-content: left;
 }
+
+.gray {
+  color: gray;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}

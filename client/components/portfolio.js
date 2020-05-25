@@ -28,13 +28,22 @@ export class Portfolio extends Component {
       if (noRepeatTickers[transaction.ticker]) {
         let newQuantity =
           noRepeatTickers[transaction.ticker][0] + transaction.quantity
-        let latestValue = await this.fillLatestStockValue(transaction.ticker)
-        noRepeatTickers[transaction.ticker] = [newQuantity, latestValue]
+        let [latestValue, dayOpenValue] = await this.fillLatestStockValue(
+          transaction.ticker
+        )
+        noRepeatTickers[transaction.ticker] = [
+          newQuantity,
+          latestValue,
+          dayOpenValue
+        ]
       } else {
-        let latestValue = await this.fillLatestStockValue(transaction.ticker)
+        let [latestValue, dayOpenValue] = await this.fillLatestStockValue(
+          transaction.ticker
+        )
         noRepeatTickers[transaction.ticker] = [
           transaction.quantity,
-          latestValue
+          latestValue,
+          dayOpenValue
         ]
       }
     }
@@ -51,7 +60,17 @@ export class Portfolio extends Component {
       iexRes = await axios.get(
         `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0`
       )
-      return iexRes.data.latestPrice
+      let latestPrice = iexRes.data.latestPrice
+      let openPrice = iexRes.data.openTime
+      let colorCode
+      if (openPrice === null || latestPrice === openPrice) {
+        colorCode = 'gray'
+      } else if (latestPrice < openPrice) {
+        colorCode = 'red'
+      } else {
+        colorCode = 'green'
+      }
+      return [iexRes.data.latestPrice, colorCode]
     } catch (err) {
       console.log('NOT FINDING LATEST PRICE')
     }
@@ -68,12 +87,13 @@ export class Portfolio extends Component {
                 let ticker = transaction[0]
                 let quantity = transaction[1][0]
                 let value = transaction[1][1]
+                let colorCode = transaction[1][2]
                 return (
                   <div key="transaction.id" className="transactionSegment">
                     <div className="transactionRow">
-                      <h3>{ticker}</h3>
+                      <h3 className={colorCode}>{ticker}</h3>
                       <h3 className="separator">|</h3>
-                      <h3>
+                      <h3 className={colorCode}>
                         {quantity} shares, total value of ${quantity * value}
                       </h3>
                     </div>
