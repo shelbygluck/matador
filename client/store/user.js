@@ -55,7 +55,6 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
     iexRes = await axios.get(
       `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0`
     )
-    console.log('IEX RESPONSE to initial call', iexRes.data)
     currentPrice = iexRes.data.latestPrice
     totalPrice = currentPrice * quantity
   } catch (err) {
@@ -68,7 +67,6 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
     user = await axios.get(`/api/users/${email}`)
     userId = user.data[0].id
     balance = user.data[0].balance
-    console.log('IS USER ID HERE?', userId)
   } catch (err) {
     console.log(err)
   }

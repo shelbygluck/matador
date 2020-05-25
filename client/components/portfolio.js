@@ -1,3 +1,4 @@
+/* eslint-disable react/no-access-state-in-setstate */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -39,17 +40,7 @@ export class Portfolio extends Component {
         ]
       }
     }
-
     let arrayForm = Object.entries(noRepeatTickers)
-
-    // let arrayFilledValue = arrayForm.map(async stock => {
-    //   let ticker = stock[0]
-    //   let quantity = stock[1][0]
-    //   let latestValue = await this.fillLatestStockValue(ticker)
-    //   console.log(latestValue, 'after func call')
-    //   let totalValue = quantity * latestValue
-    //    return [ticker, [quantity, totalValue]]
-    // })
     this.setState({
       portfolioLoaded: true,
       portfolio: arrayForm
@@ -71,7 +62,6 @@ export class Portfolio extends Component {
   render() {
     return (
       <div>
-        {console.log(this.props.balance)}
         <h3>
           Portfolio for {this.props.email}, balance is {this.props.balance}
         </h3>
@@ -154,7 +144,6 @@ const mapDispatch = dispatch => ({
     const email = evt.target.email.value
     const ticker = evt.target.ticker.value
     const quantity = Number(evt.target.quantity.value)
-    console.log(ticker, quantity, email)
     dispatch(purchase(ticker, quantity, email))
   }
 })
@@ -167,6 +156,3 @@ export default connect(mapState, mapDispatch)(Portfolio)
 Portfolio.propTypes = {
   email: PropTypes.string
 }
-
-//showing non flattened transactions, good job!
-//now you need to flatten share count, and get api call to current price * quantity owned
