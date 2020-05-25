@@ -90,6 +90,9 @@ export const purchase = (ticker, quantity, email) => async dispatch => {
     userId: userId
   }
   dispatch(addTransaction(transactionInfo))
+  window.alert(
+    `Your purchase of ${quantity} shares of ${ticker} was successful! Check out your new stocks in your portfolio.`
+  )
 }
 
 export const logout = () => async dispatch => {

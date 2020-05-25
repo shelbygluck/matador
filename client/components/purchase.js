@@ -58,14 +58,9 @@ const mapDispatch = dispatch => ({
   handleSubmit(evt) {
     evt.preventDefault()
     const email = evt.target.email.value
-    let ticker = evt.target.ticker.value
+    let ticker = evt.target.ticker.value.toUpperCase()
     const quantity = Number(evt.target.quantity.value)
     dispatch(purchase(ticker, quantity, email))
-    ticker = ticker.toUpperCase()
-    // eslint-disable-next-line no-alert
-    window.alert(
-      `Your purchase of ${quantity} shares of ${ticker} was successful! Check out your new stocks in your portfolio.`
-    )
   }
 })
 
