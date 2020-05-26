@@ -3,10 +3,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {purchase} from '../store'
 
-/**
- * COMPONENT
- */
-
 export class Purchase extends Component {
   render() {
     return (
@@ -44,9 +40,6 @@ export class Purchase extends Component {
   }
 }
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
     email: state.user.email,

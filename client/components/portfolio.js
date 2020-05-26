@@ -117,9 +117,6 @@ export class Portfolio extends Component {
   }
 }
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
     email: state.user.email,

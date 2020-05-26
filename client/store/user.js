@@ -3,28 +3,16 @@ import axios from 'axios'
 import history from '../history'
 import {addTransaction} from './transaction'
 
-/**
- * ACTION TYPES
- */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const UPDATE_BALANCE = 'UPDATE_BALANCE'
 
-/**
- * INITIAL STATE
- */
 const defaultUser = {}
 
-/**
- * ACTION CREATORS
- */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 const updateBalance = newBalance => ({type: UPDATE_BALANCE, newBalance})
 
-/**
- * THUNK CREATORS
- */
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -107,9 +95,6 @@ export const logout = () => async dispatch => {
   }
 }
 
-/**
- * REDUCER
- */
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:

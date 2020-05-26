@@ -1,19 +1,11 @@
 /* eslint-disable no-alert */
 import axios from 'axios'
 
-/**
- * ACTION TYPES
- */
 const ADD_TRANSACTION = 'ADD_TRANSACTION'
 const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
-/**
- * INITIAL STATE
- */
+
 const initialState = []
 
-/**
- * ACTION CREATORS
- */
 const addedTransaction = transactionInfo => ({
   type: ADD_TRANSACTION,
   transactionInfo
@@ -23,9 +15,6 @@ const getMyTransactions = transactions => ({
   type: GET_TRANSACTIONS,
   transactions
 })
-/**
- * THUNK CREATORS
- */
 
 export const addTransaction = transactionInfo => async dispatch => {
   let newTransaction
@@ -46,9 +35,6 @@ export const gettingTransactions = email => async dispatch => {
   }
 }
 
-/**
- * REDUCER
- */
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_TRANSACTION:
