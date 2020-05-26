@@ -10,8 +10,6 @@ export const UserHome = props => {
 
   return (
     <div>
-      {console.log(props)}
-
       <h3>Welcome, {email}</h3>
     </div>
   )

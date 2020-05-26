@@ -22,7 +22,6 @@ router.get('/:email', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  console.log(req.body)
   try {
     const response = await Transaction.create({
       ticker: req.body.ticker,

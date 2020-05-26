@@ -75,7 +75,7 @@ export class Portfolio extends Component {
       }
       return [iexResCurrent.data.latestPrice, colorCode]
     } catch (err) {
-      console.log('NOT FINDING LATEST PRICE')
+      console.log('not accessing api')
     }
   }
 
