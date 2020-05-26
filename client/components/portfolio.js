@@ -55,13 +55,16 @@ export class Portfolio extends Component {
   }
 
   async fillLatestStockValue(ticker) {
-    let iexRes
+    let iexResCurrent, iexResOpen
     try {
-      iexRes = await axios.get(
+      iexResCurrent = await axios.get(
         `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0`
       )
-      let latestPrice = iexRes.data.latestPrice
-      let openPrice = iexRes.data.openTime
+      let latestPrice = iexResCurrent.data.latestPrice
+      iexResOpen = await axios.get(
+        `https://cloud.iexapis.com/stable/stock/${ticker}/intraday-prices?token=pk_9fe41c3d9b9a42ddaf552dbfdfbbbff0`
+      )
+      let openPrice = iexResOpen.data[0].open
       let colorCode
       if (openPrice === null || latestPrice === openPrice) {
         colorCode = 'gray'
@@ -70,7 +73,7 @@ export class Portfolio extends Component {
       } else {
         colorCode = 'green'
       }
-      return [iexRes.data.latestPrice, colorCode]
+      return [iexResCurrent.data.latestPrice, colorCode]
     } catch (err) {
       console.log('NOT FINDING LATEST PRICE')
     }
@@ -94,7 +97,9 @@ export class Portfolio extends Component {
                       <h3 className={colorCode}>{ticker}</h3>
                       <h3 className="separator">|</h3>
                       <h3 className={colorCode}>
-                        {quantity} shares, total value of ${quantity * value}
+                        {quantity} shares, total value of ${(
+                          quantity * value
+                        ).toFixed(2)}
                       </h3>
                     </div>
                     <h3 className="separator">
@@ -128,3 +133,8 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(Portfolio)
+
+//opentime from api is pulling "null" (holiday?) so all portfolio instances are gray
+//need to see if red and green work with existing code tomorrow
+// otherwise, recheck api opentime data (< > working with type of data returned?)
+//use latest price if market isn't open (is latest price current price?)
