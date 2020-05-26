@@ -16,7 +16,11 @@ export class Portfolio extends Component {
   }
 
   async componentDidMount() {
-    await this.props.getTransactions(this.props.email)
+    try {
+      await this.props.getTransactions(this.props.email)
+    } catch (err) {
+      console.log(err)
+    }
 
     let transactions = this.props.transactions
     let noRepeatTickers = {}
@@ -25,18 +29,28 @@ export class Portfolio extends Component {
       if (noRepeatTickers[transaction.ticker]) {
         let newQuantity =
           noRepeatTickers[transaction.ticker][0] + transaction.quantity
-        let [latestValue, dayOpenValue] = await this.fillLatestStockValue(
-          transaction.ticker
-        )
+        let latestValue, dayOpenValue
+        try {
+          ;[latestValue, dayOpenValue] = await this.fillLatestStockValue(
+            transaction.ticker
+          )
+        } catch (err) {
+          console.log(err)
+        }
         noRepeatTickers[transaction.ticker] = [
           newQuantity,
           latestValue,
           dayOpenValue
         ]
       } else {
-        let [latestValue, dayOpenValue] = await this.fillLatestStockValue(
-          transaction.ticker
-        )
+        let latestValue, dayOpenValue
+        try {
+          ;[latestValue, dayOpenValue] = await this.fillLatestStockValue(
+            transaction.ticker
+          )
+        } catch (err) {
+          console.log(err)
+        }
         noRepeatTickers[transaction.ticker] = [
           transaction.quantity,
           latestValue,

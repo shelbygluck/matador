@@ -13,7 +13,11 @@ export class Transactions extends Component {
   }
 
   async componentDidMount() {
-    await this.props.getTransactions(this.props.email)
+    try {
+      await this.props.getTransactions(this.props.email)
+    } catch (err) {
+      console.log(err)
+    }
     this.setState({
       transactionsLoaded: true
     })
