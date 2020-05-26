@@ -122,7 +122,3 @@ export default function(state = defaultUser, action) {
       return state
   }
 }
-
-//work on mapping transactions in component
-//plus Link to refresh page after everything is done
-//maybe some alert to say your transaction was successful

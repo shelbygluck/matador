@@ -133,8 +133,3 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(Portfolio)
-
-//opentime from api is pulling "null" (holiday?) so all portfolio instances are gray
-//need to see if red and green work with existing code tomorrow
-// otherwise, recheck api opentime data (< > working with type of data returned?)
-//use latest price if market isn't open (is latest price current price?)
