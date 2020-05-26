@@ -8,23 +8,24 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: auto 2110px;
+  color: white;
 }
 
 a {
   text-decoration: none;
-  color: gray;
+  color: white;
 }
 
 a:visited {
-  color: gray;
+  color: white;
 }
 
 a:hover {
-  color: red;
+  color: gray;
 }
 
 a:active {
-  color: red;
+  color: gray;
   text-decoration: underline;
 }
 
@@ -53,7 +54,7 @@ form div {
   display: flex;
   flex-direction: column;
   justify-content: left;
-  align-items: center;
+  align-items: left;
 }
 
 #top-logo {
@@ -63,7 +64,7 @@ form div {
 
 .containerR {
   display: flex;
-  justify-content: left;
+  justify-content: right;
   align-items: center;
 }
 
@@ -74,6 +75,7 @@ form div {
 
 .whiteSpace {
   color: white;
+  opacity: 0;
 }
 
 #invisible {
@@ -89,7 +91,6 @@ form div {
   flex-direction: column;
   justify-items: center;
   align-items: left;
-  background-color: lightblue;
   width: 500px;
   padding-top: 2em;
   padding-bottom: 2em;
@@ -117,14 +118,17 @@ form div {
 .portfolioContainer {
   display: flex;
   justify-content: left;
+  background-color: white;
+  width: 500px;
+  opacity: 0.7;
 }
 
 .gray {
   color: gray;
 }
 .red {
-  color: red;
+  color: darkred;
 }
 .green {
-  color: green;
+  color: darkgreen;
 }

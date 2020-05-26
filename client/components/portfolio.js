@@ -109,7 +109,7 @@ export class Portfolio extends Component {
                 )
               })
             ) : (
-              <div>loading portfolio</div>
+              <div>Matador is loading your portfolio</div>
             )}
           </div>
         </div>
