@@ -1,5 +1,6 @@
 {
   "name": "matador",
+  "homepage": "https://matador6.herokuapp.com/",
   "version": "2.0.0",
   "description": "Wrangle the bull market with this user-friendly personal stock management and trading platform",
   "engines": {
