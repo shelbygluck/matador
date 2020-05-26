@@ -8,16 +8,16 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: auto 2110px;
-  color: white;
+  color: #f5f5dc;
 }
 
 a {
   text-decoration: none;
-  color: white;
+  color: #f5f5dc;
 }
 
 a:visited {
-  color: white;
+  color: #f5f5dc;
 }
 
 a:hover {
@@ -74,7 +74,6 @@ form div {
 }
 
 .whiteSpace {
-  color: white;
   opacity: 0;
 }
 
@@ -118,26 +117,31 @@ form div {
 .portfolioContainer {
   display: flex;
   justify-content: left;
-  color: white;
 }
 
 .gray {
   color: gray;
+  text-shadow: -1px -1px 0 #f5f5dc, 1px -1px 0 #f5f5dc, -1px 1px 0 #f5f5dc,
+    1px 1px 0 #f5f5dc;
 }
 .gray:hover {
-  color: white;
+  color: gray;
 }
 .red {
-  color: darkred;
+  color: red;
+  text-shadow: -1px -1px 0 #f5f5dc, 1px -1px 0 #f5f5dc, -1px 1px 0 #f5f5dc,
+    1px 1px 0 #f5f5dc;
 }
 .red:hover {
-  color: white;
+  color: gray;
 }
 .green {
-  color: darkgreen;
+  color: green;
+  text-shadow: -1px -1px 0 #f5f5dc, 1px -1px 0 #f5f5dc, -1px 1px 0 #f5f5dc,
+    1px 1px 0 #f5f5dc;
 }
 .green:hover {
-  color: white;
+  color: gray;
 }
 
 .loadingContainer {

@@ -7,7 +7,8 @@ export class Purchase extends Component {
   render() {
     return (
       <div>
-        <h3>Balance is {this.props.balance}</h3>
+        <h2>Your balance is ${this.props.balance}</h2>
+        <h4>Not sure where to start? Buy some Spotify stock (ticker: SPOT)!</h4>
         <form id="stock-form" onSubmit={this.props.handleSubmit}>
           <div>
             <label htmlFor="ticker">
