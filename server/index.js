@@ -54,7 +54,7 @@ const createApp = () => {
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
 
-  app.use(express.static(path.join(__dirname, 'public')))
+  app.use(express.static(path.join(__dirname, '..', 'public')))
 
   app.use((req, res, next) => {
     if (path.extname(req.path).length) {
@@ -67,7 +67,7 @@ const createApp = () => {
   })
 
   app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '/index.html'))
+    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
   })
 
   app.use((err, req, res, next) => {
