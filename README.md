@@ -14,5 +14,7 @@
 ```
 
 💻 Technologies Used
+
 ➤ Front-end: React, Redux, HTML, CSS, React-Loading, IEX Cloud Stock API data
+
 ➤ Back-end: Node, Express, PostgreSQL, Sequelize
