@@ -1,4 +1,4 @@
-### 🌎💰📊Wrangle a bull market with this user-friendly personal stock management and purchasing platform📊💰🌎
+## 🌎💰📊Wrangle a bull market with this user-friendly personal stock management and purchasing platform📊💰🌎
 
 👀Developed by Shelby Gluck
 
