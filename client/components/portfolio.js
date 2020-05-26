@@ -3,10 +3,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {gettingTransactions} from '../store/transaction'
-
-/**
- * COMPONENT
- */
+import {Loading} from './loading'
 
 export class Portfolio extends Component {
   constructor() {
@@ -82,7 +79,6 @@ export class Portfolio extends Component {
   render() {
     return (
       <div>
-        <h3>Portfolio for {this.props.email}</h3>
         <div className="portfolioContainer">
           <div id="transactionTable">
             {this.state.portfolioLoaded ? (
@@ -109,7 +105,10 @@ export class Portfolio extends Component {
                 )
               })
             ) : (
-              <div>Matador is loading your portfolio</div>
+              <div className="loadingContainer">
+                <h3>Matador is loading your portfolio</h3>
+                <Loading type="bars" />
+              </div>
             )}
           </div>
         </div>

@@ -2,9 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {gettingTransactions} from '../store/transaction'
-/**
- * COMPONENT
- */
+import {Loading} from './loading'
+
 export class Transactions extends Component {
   constructor() {
     super()
@@ -23,8 +22,6 @@ export class Transactions extends Component {
   render() {
     return (
       <div>
-        <h3>Transactions for {this.props.email}</h3>
-
         <div id="transactionTable">
           {this.state.transactionsLoaded ? (
             this.props.transactions.map(transaction => {
@@ -46,7 +43,10 @@ export class Transactions extends Component {
               )
             })
           ) : (
-            <div>loading transactions</div>
+            <div className="loadingContainer">
+              <h3>Matador is loading your transactions</h3>
+              <Loading type="bars" />
+            </div>
           )}
         </div>
       </div>
